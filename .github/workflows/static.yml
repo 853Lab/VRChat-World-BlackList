@@ -23,21 +23,21 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: windows-latest
     steps:
+      - name: Setup Msys2
+        uses: msys2/setup-msys2@v2
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           path: blacklist
       - name: Get 7z File
         run: |
-          curl -o 7zr.exe https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/7zr.exe
-          curl -o VRCBlackListTool.7z https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/TheTool.7z
-        shell: cmd
+          wget -O 7zr.exe https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/7zr.exe
+          wget -O VRCBlackListTool.7z https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/TheTool.7z
+        shell: msys2 {0}
       - name: SHA of result file
         id: initial
-        run: |
-          $hash = Get-FileHash -Algorithm SHA512 -Path "blacklist/blacklist.txt" | Select-Object -ExpandProperty Hash
-          echo hash=$hash >> $env:GITHUB_OUTPUT
-        shell: pwsh
+        run: echo "hash=$(shasum -a 512 blacklist/blacklist.txt | awk '{ print $1 }')" >> $GITHUB_OUTPUT
+        shell: msys2 {0}
       - name: Unpack And Run File
         run: |
           7zr.exe x VRCBlackListTool.7z -oVRCBlackListTool
@@ -46,10 +46,8 @@ jobs:
         shell: cmd
       - name: SHA of result file
         id: final
-        run: |
-          $hash = Get-FileHash -Algorithm SHA512 -Path "blacklist/blacklist.txt" | Select-Object -ExpandProperty Hash
-          echo hash=$hash >> $env:GITHUB_OUTPUT
-        shell: pwsh
+        run: echo "hash=$(shasum -a 512 blacklist/blacklist.txt | awk '{ print $1 }')" >> $GITHUB_OUTPUT
+        shell: msys2 {0}
       - name: Compare hashes and commit if different
         if: steps.initial.outputs.hash != steps.final.outputs.hash
         run: |
