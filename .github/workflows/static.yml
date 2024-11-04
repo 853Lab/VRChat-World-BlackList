@@ -40,8 +40,36 @@ jobs:
           wget -O 7zr.exe https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/7zr.exe
           wget -O VRCBlackListTool.7z https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/TheTool.7z
         shell: msys2 {0}
-      - name: Unpack File
+      - name: SHA of result file
+        id: initial
+        run: echo "hash=$(shasum -a 512 blacklist/blacklist.txt | awk '{ print $1 }')" >> $GITHUB_OUTPUT
+        shell: msys2 {0}
+      - name: Unpack And Run File
         run: |
           7zr.exe x VRCBlackListTool.7z -oVRCBlackListTool
-          .\VRCBlackListTool\VRChatBlackList.exe --user=${{ secrets.VRC_USER }} --password=${{ secrets.VRC_PASS }} --secret=${{ secrets.VRC_SECRET }} --key=${{ secrets.KEY }} --iv=${{ secrets.IV }} --min=${{ secrets.MIN }} --input=blacklist\blacklist.txt --image=VRCBlackListTool\blacklistsource.png --output=blacklist\blacklist.png
+          mkdir pages
+          .\VRCBlackListTool\VRChatBlackList.exe --user=${{ secrets.VRC_USER }} --password=${{ secrets.VRC_PASS }} --secret=${{ secrets.VRC_SECRET }} --key=${{ secrets.KEY }} --iv=${{ secrets.IV }} --min=${{ secrets.MIN }} --input=blacklist\blacklist.txt --image=VRCBlackListTool\blacklistsource.png --output=pages\blacklist.png
         shell: cmd
+      - name: SHA of result file
+        id: final
+        run: echo "hash=$(shasum -a 512 blacklist/blacklist.txt | awk '{ print $1 }')" >> $GITHUB_OUTPUT
+        shell: msys2 {0}
+      - name: Compare hashes and commit if different
+        if: steps.initial.outputs.hash != steps.final.outputs.hash
+        run: |
+          cd blacklist
+          git config --local user.email "Sonic853@qq.com" && git config --local user.name "853 Action"
+          git add blacklist.txt
+          git commit -m "Update blacklist"
+          git push
+        shell: cmd
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: './pages'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
