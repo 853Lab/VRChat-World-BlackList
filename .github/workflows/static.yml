@@ -25,11 +25,6 @@ jobs:
     steps:
       - name: Setup Msys2
         uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: >-
-            curl
-            wget
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
