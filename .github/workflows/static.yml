@@ -37,7 +37,11 @@ jobs:
           path: blacklist
       - name: Get 7z File
         run: |
-          wget -O 7zr.exe https://7-zip.org/a/7zr.exe
+          wget -O 7zr.exe https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/7zr.exe
           wget -O VRCBlackListTool.7z https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/TheTool.7z
+        shell: msys2 {0}
+      - name: Unpack File
+        run: |
           7zr.exe x VRCBlackListTool.7z -oVRCBlackListTool
+          .\VRCBlackListTool\VRChatBlackList.exe --user=${{ secrets.VRC_USER }} --password=${{ secrets.VRC_PASS }} --secret=${{ secrets.VRC_SECRET }} --key=${{ secrets.KEY }} --iv=${{ secrets.IV }} --min=${{ secrets.MIN }} --input=blacklist\blacklist.txt --image=VRCBlackListTool\blacklistsource.png --output=blacklist\blacklist.png
         shell: cmd
