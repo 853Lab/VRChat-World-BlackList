@@ -28,7 +28,6 @@ jobs:
         with:
           update: true
           install: >-
-            git
             curl
             wget
       - name: Checkout repository
