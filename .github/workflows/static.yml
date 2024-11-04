@@ -1,0 +1,43 @@
+name: Deploy Static Site
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: windows-latest
+    steps:
+      - name: Setup Msys2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            git
+            curl
+            wget
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: blacklist
+      - name: Get 7z File
+        run: |
+          wget -O 7zr.exe https://7-zip.org/a/7zr.exe
+          wget -O VRCBlackListTool.7z https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/TheTool.7z
+          7zr.exe x VRCBlackListTool.7z -oVRCBlackListTool
+        shell: cmd
