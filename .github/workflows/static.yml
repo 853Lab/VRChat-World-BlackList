@@ -31,8 +31,8 @@ jobs:
           path: blacklist
       - name: Get 7z File
         run: |
-          wget -O 7zr.exe https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/7zr.exe
-          wget -O VRCBlackListTool.7z https://github.com/Sonic853/VRChat-BlackList/releases/download/0.0.1/TheTool.7z
+          wget -O 7zr.exe https://github.com/853Lab/VRChat-World-BlackList/releases/download/0.0.1/7zr.exe
+          wget -O VRCBlackListTool.7z https://github.com/853Lab/VRChat-World-BlackList/releases/download/0.0.1/TheTool.7z
         shell: msys2 {0}
       - name: SHA of result file
         id: initial
