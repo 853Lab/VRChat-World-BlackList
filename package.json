@@ -1,0 +1,21 @@
+{
+  "name": "com.sonic853.blacklist",
+  "version": "1.0.0",
+  "displayName": "Sonic853 - Black List",
+  "description": "一种黑名单",
+  "unity": "2022.3",
+  "homepage": "https://github.com/Sonic853/VRChat-BlackList",
+  "documentationUrl": "https://github.com/Sonic853/VRChat-BlackList",
+  "changelogUrl": "https://github.com/Sonic853/VRChat-BlackList/releases",
+  "licensesUrl": "https://github.com/Sonic853/VRChat-BlackList/blob/master/LICENSE",
+  "license": "LGPL-3.0-or-later",
+  "keywords": [],
+  "author": {
+    "name": "Sonic853",
+    "email": "sonic853@qq.com",
+    "url": "https://github.com/Sonic853"
+  },
+  "vpmDependencies": {
+    "com.sonic853.texture2string": "1.x.x"
+  }
+}
