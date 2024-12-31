@@ -3,6 +3,10 @@ Auto Block User with user id
 
 Demo: https://vrchat.com/home/world/wrld_763c51b6-d96e-49ed-b340-7dadb1d68e78
 
+## 安装教程
+
+见 [使用方法.md](使用方法.md)
+
 ## License restrictions 许可限制
 
 Individuals or companies in Chinese Mainland (except Hong Kong China, Macau China, and Taiwan Province of China) are prohibited from using this LGPL license and using this repository and products if the following circumstances apply:

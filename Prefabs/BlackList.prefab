@@ -60,14 +60,7 @@ MonoBehaviour:
   f2b: {fileID: 4900000, guid: 083269039e6ab8848a60261550c16c9f, type: 3}
   bb: {fileID: 4900000, guid: 037c61ee680db3a4e8c3be1c470633b5, type: 3}
   texture: {fileID: 0}
-  gameObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  gameObjects: []
   vRCWorld: {fileID: 0}
   moveVRCWorld: {fileID: 6553779000988713376}
   tMP_Text: {fileID: 0}
